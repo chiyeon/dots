@@ -2,10 +2,16 @@ call plug#begin()
 
 Plug 'junegunn/seoul256.vim'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
+" this is for SCHOOL NOTES
+let g:vimwiki_list = [{'path':'~/uci-notes/'}, {'path_html':'~/uci-notes/export/html/'}]
+
 " custom vimrc
+set nocompatible
+filetype plugin on
 set number
 set wrap
 set mouse=a
