@@ -1,0 +1,62 @@
+window {
+    border:  0px;
+    font-family: "Maple Mono", monospace;
+    font-size: 20px;
+}
+
+* {
+    font-family: "Maple Mono", monospace;  
+}
+
+#input {
+   border-radius: 0px;
+    border: 0px;
+    margin: 0px;
+    padding: 8px;
+    font-size: 20px;
+	color: #774243;
+	background-color: #FCEADE;
+}
+
+#input:selected {
+   border: none;
+}
+
+#inner-box {
+	margin: 0px;
+   color: #FCEADE;
+	background-color: #775253;
+}
+
+#outer-box {
+	margin: 0px;
+	background-color: #775253;
+}
+
+#entry:selected {
+	background-color: #FCEADE;
+   color: #775253;
+}
+
+#text:selected {
+   color: #775253;
+}
+
+#entry:selected {
+   color: #FCEADE !important;
+}
+
+#entry {
+	padding: 0px;
+    margin: 0px;
+	background-color: #775253;
+}
+
+#scroll {
+	background-color: #EAE8FF;
+}
+
+#text {
+	margin: 0px;
+   padding: 8px 16px;
+}
