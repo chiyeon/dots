@@ -15,7 +15,7 @@ let g:vimwiki_list = [{'path':'~/uci-notes/'}, {'path_html':'~/uci-notes/export/
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsSnippetDirectories = "~/.config/nvim/snippets"
+let g:UltiSnipsSnippetDirectories = "~/.vim/snippets"
 
 " vimtex settings
 let g:tex_flavor='latex'
