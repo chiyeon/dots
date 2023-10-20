@@ -1,3 +1,8 @@
+* {
+   --dark: #141414;
+   --light: #feffd3;
+}
+
 window {
     border:  0px;
     font-family: "Maple Mono", monospace;
@@ -14,8 +19,8 @@ window {
     margin: 0px;
     padding: 8px;
     font-size: 20px;
-	color: #774243;
-	background-color: #FCEADE;
+	color: var(--light);
+	background-color: var(--dark);
 }
 
 #input:selected {
@@ -24,8 +29,8 @@ window {
 
 #inner-box {
 	margin: 0px;
-   color: #FCEADE;
-	background-color: #775253;
+   color: var(--light);
+	background-color: var(--dark);
 }
 
 #outer-box {
@@ -49,7 +54,7 @@ window {
 #entry {
 	padding: 0px;
     margin: 0px;
-	background-color: #775253;
+	background-color: var(--dark);
 }
 
 #scroll {

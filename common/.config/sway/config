@@ -27,7 +27,7 @@ set $menu wofi --show=drun --width=25% --lines=7 --prompt=""
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/chi/Pictures/wallpapers/cat.jpg fill
+output * bg /home/chi/Pictures/wallpapers/cat_twilight.png fill
 #
 # Example configuration:
 #

@@ -1,21 +1,22 @@
 call plug#begin()
 
-Plug 'junegunn/seoul256.vim'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 Plug 'lervag/vimtex'
 Plug 'sirver/ultisnips'
+Plug 'lervag/wiki.vim'
 
 call plug#end()
 
 " this is for SCHOOL NOTES
-let g:vimwiki_list = [{'path':'~/uci-notes/'}, {'path_html':'~/uci-notes/export/html/'}]
+" let g:vimwiki_list = [{'path':'~/uci-notes/'}, {'path_html':'~/uci-notes/export/html/'}]
+let g:wiki_root = "~/uci-notes/"
 
 " snippets
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsSnippetDirectories = "~/.config/nvim/snippets"
+let g:UltiSnipsSnippetDirectories = "~/.vim/snippets"
 
 " vimtex settings
 let g:tex_flavor='latex'
@@ -35,7 +36,6 @@ set ruler
 set visualbell
 
 syntax enable
-colorscheme seoul256
 
 set tabstop=3
 set expandtab
