@@ -5,22 +5,21 @@
 
 window {
     border:  0px;
-    font-family: "Maple Mono", monospace;
-    font-size: 20px;
 }
 
 * {
-    font-family: "Maple Mono", monospace;  
+    font-family: "tewihidpi", monospace;  
+    font-size: 20px;
 }
 
 #input {
    border-radius: 0px;
     border: 0px;
     margin: 0px;
-    padding: 8px;
-    font-size: 20px;
-	color: var(--light);
-	background-color: var(--dark);
+    padding: 4px;
+    padding-bottom: 9px;
+	color: #141414;
+	background-color: #feffd3;
 }
 
 #input:selected {
@@ -39,12 +38,12 @@ window {
 }
 
 #entry:selected {
-	background-color: #FCEADE;
-   color: #775253;
+	background-color: #d0db83;
+   color: #141414;
 }
 
 #text:selected {
-   color: #775253;
+   color: #141414;
 }
 
 #entry:selected {
@@ -54,7 +53,8 @@ window {
 #entry {
 	padding: 0px;
     margin: 0px;
-	background-color: var(--dark);
+   color: #feffd3;
+	background-color: #141414;
 }
 
 #scroll {
