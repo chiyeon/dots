@@ -1,8 +1,8 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "kiwihidpi", "Cozette", monospace;
-    font-size: 18px;
+    font-family: "Iosevka", monospace;
+    font-size: 14px;
     min-height: 0;
 }
 
@@ -36,7 +36,7 @@ tooltip label {
 #mode, #battery, #backlight, #network, #pulseaudio {
    padding: 0 12px;
    font-family: "Font Awesome";
-   font-size: 16px;
+   font-size: 14px;
 }
 
 #battery {

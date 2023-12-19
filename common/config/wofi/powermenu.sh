@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-op=$( echo -e " Poweroff\n Reboot\n Suspend\n Lock\n Logout" | wofi -i --dmenu --width=25% --lines=6 | awk '{print tolower($2)}' )
+op=$( echo -e " Poweroff\n Reboot\n Suspend\n Lock\n Logout" | wofi -i --dmenu --prompt='What today?' --width=20% --lines=6 | awk '{print tolower($2)}' )
 
 case $op in 
         poweroff)
@@ -29,6 +29,6 @@ case $op in
 
                 ;;
         logout)
-                hyprctl dispatch exit
+               loginctl kill-user $(whoami)                
                 ;;
 esac

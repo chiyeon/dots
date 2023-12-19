@@ -4,7 +4,18 @@ vim.cmd.source(vimrc)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+vim.g.mapleader = " "
+
 vim.api.nvim_set_keymap("n", "<C-h>", ":NvimTreeToggle<cr>", {silent = true, noremap = true})
+
+vim.api.nvim_set_keymap("n", "<Leader>h", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
+
+vim.api.nvim_set_keymap("n", "<Leader>f", ":Telescope find_files<cr>", { silent = true, noremap = true })
+
+vim.api.nvim_set_keymap("n", "<Leader>m", ":Mason<cr>", { silent = true, noremap = true })
+
+vim.api.nvim_set_keymap("n", "<Leader>l", ":Lazy<cr>", { silent = true, noremap = true })
 
 vim.g.UltiSnipsExpandTrigger='<tab>'
 
@@ -21,12 +32,43 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.fillchars = {eob = " "}
 plugins = {
    {
       'goolord/alpha-nvim',
       config = function ()
-         require'alpha'.setup(require'alpha.themes.dashboard'.config)
-      end
+         local dashboard = require("alpha.themes.dashboard")
+
+         dashboard.section.header.val = {
+            "",
+            "",
+            "",
+            "       (o_",
+            "(o_    //\\",
+            "(/)_   V_/_ "
+         }
+
+         local new_button = function(shortcut, text, command)
+            local button = dashboard.button(shortcut, text, command)
+            button.opts.width = 30
+            return button
+         end
+
+         dashboard.section.buttons.val = {
+            new_button("e", "  New file" , ":ene <BAR> startinsert<cr>"),
+            new_button("f", "  Find file", ":cd $HOME/Projects/yes | Telescope find_files<cr>"),
+            new_button("r", "  Recent files", ":Telescope oldfiles<cr>"),
+            new_button("q", "󰗼  Quit", ":qa<cr>")
+         }
+
+         dashboard.section.buttons.opts.width = 30;
+
+         dashboard.section.footer.val = "...where fantasy and fun come to life."
+
+         dashboard.opts.opts.noautocmd = true
+
+         require'alpha'.setup(dashboard.opts)
+      end,
    },
 
    {
@@ -42,6 +84,44 @@ plugins = {
    },
 
    {
+      "nvim-lualine/lualine.nvim",
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
+      config = function()
+         require("lualine").setup()
+      end
+      
+   },
+
+   {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      init = function()
+         vim.o.timeout = true
+         vim.o.timeoutlen = 300
+      end,
+      opts = {
+
+      }
+   },
+
+   {
+      "folke/noice.nvim",
+      event = "VeryLazy",
+      opts = { },
+      dependencies = {
+         "MunifTanjim/nui.nvim"
+      }
+   },
+
+   {
+      "nvim-telescope/telescope.nvim",
+      dependencies = {
+         "nvim-lua/plenary.nvim"
+      },
+   },
+
+   --[[
+   {
       "nvim-treesitter/nvim-treesitter",
       build = ":TSUpdate",
       config = function () 
@@ -55,6 +135,7 @@ plugins = {
          })
       end
    },
+   --]]
 
    {
       'romgrk/barbar.nvim',
@@ -76,7 +157,7 @@ plugins = {
    {
       "neovim/nvim-lspconfig", 
    },
-
+   
    --[[
    {
       "ms-jpq/coq_nvim",
@@ -101,6 +182,7 @@ plugins = {
    }
    ]]--
 
+   --[[
    {
       "simrat39/rust-tools.nvim",
       config = function()
@@ -119,6 +201,34 @@ plugins = {
       end
    },
 
+   ]]--
+
+   {
+      "williamboman/mason.nvim",
+      cmd = "Mason",
+      build = ":MasonUpdate",
+      config = function()
+         require("mason").setup()
+      end
+   },
+
+   { 
+      "williamboman/mason-lspconfig.nvim",
+      config = function()
+         require("mason-lspconfig").setup()
+
+         require("mason-lspconfig").setup_handlers {
+            function (server_name)
+               local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+               require("lspconfig")[server_name].setup({
+                  capabilities = lsp_capabilities
+               })
+
+            end
+         }
+      end
+   },
+
    {
       "hrsh7th/nvim-cmp",
       dependencies = {
@@ -127,13 +237,14 @@ plugins = {
          "hrsh7th/cmp-buffer",
          "hrsh7th/cmp-path",
          "hrsh7th/cmp-cmdline",
-         "SirVer/ultisnips",
+         "L3MON4D3/LuaSnip",
          "neovim/nvim-lspconfig",
          "quangnguyen30192/cmp-nvim-ultisnips"
       },
-
+      event = "VeryLazy",
       config = function()
          local cmp = require("cmp")
+         local luasnip = require("luasnip")
          vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
          cmp.setup({
@@ -151,12 +262,31 @@ plugins = {
                ["<C-f>"] = cmp.mapping.scroll_docs(4),
                ["<C-Space>"] = cmp.mapping.complete(),
                ["<C-e>"] = cmp.mapping.abort(),
-               ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+               ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+               ["<Tab>"] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.select_next_item()
+                  elseif luasnip.expand_or_jumpable() then
+                     luasnip.expand_or_jump()
+                  else
+                     fallback()
+                  end
+               end, {"i", "s"}),
+
+               ["<S-Tab>"] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.select_prev_item()
+                  elseif luasnip.jumpable(-1) then
+                     luasnip.jump(-1)
+                  else
+                     fallback()
+                  end
+               end, {"i", "s"}),
             }),
             sources = cmp.config.sources({
                { name = "nvim_lsp" },
                { name = "nvim_lua" },
-               { name = "ultisnips" }, -- For luasnip users.
+               { name = "luasnips" }, -- For luasnip users.
                -- { name = "orgmode" },
             }, {
                { name = "buffer" },
@@ -173,6 +303,7 @@ plugins = {
             }),
          }) 
 
+         --[[
          local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
          local lspconfig = require("lspconfig")
 
@@ -188,9 +319,8 @@ plugins = {
                capabilities = lsp_capabilities
             })
          end
+         ]]--
       end
    }
 }
-
 require("lazy").setup(plugins)
---vim.cmd([[COQnow -s]])
