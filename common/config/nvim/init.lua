@@ -1,5 +1,46 @@
-local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
-vim.cmd.source(vimrc)
+-- local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
+-- vim.cmd.source(vimrc)
+
+-- basic vim stuff
+vim.o.number = true
+vim.o.wrap = true
+vim.o.mouse = 'a'
+vim.o.showmatch = true
+vim.o.ruler = true
+vim.o.visualbell = false
+vim.o.spell = true 
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.swapfile = false
+vim.o.synmaxcol = 30
+
+vim.o.syntax = 'enable'
+
+vim.o.tabstop = 3
+vim.o.expandtab = true
+vim.o.shiftwidth = 3
+vim.o.softtabstop = 3
+
+vim.o.autoindent = true
+vim.o.smartindent = true
+vim.o.smarttab = true
+
+vim.o.incsearch = true
+vim.o.hlsearch = true
+vim.o.ignorecase = true
+
+vim.o.linebreak = true
+vim.o.encoding = 'utf-8'
+vim.o.scrolloff = 8
+vim.o.sidescrolloff = 8
+vim.o.laststatus = 2
+vim.o.wildmenu = true
+vim.o.title = true
+
+vim.o.dir = '~/.cache/vim'
+vim.o.backspace = 'indent,eol,start'
+vim.o.history = 1000
+--vim.o.confirm = true
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -8,13 +49,9 @@ vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = " "
 
 vim.api.nvim_set_keymap("n", "<C-h>", ":NvimTreeToggle<cr>", {silent = true, noremap = true})
-
 vim.api.nvim_set_keymap("n", "<Leader>h", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
-
 vim.api.nvim_set_keymap("n", "<Leader>f", ":Telescope find_files<cr>", { silent = true, noremap = true })
-
 vim.api.nvim_set_keymap("n", "<Leader>m", ":Mason<cr>", { silent = true, noremap = true })
-
 vim.api.nvim_set_keymap("n", "<Leader>l", ":Lazy<cr>", { silent = true, noremap = true })
 
 vim.g.UltiSnipsExpandTrigger='<tab>'
@@ -93,6 +130,44 @@ plugins = {
    },
 
    {
+      "nvim-treesitter/nvim-treesitter",
+      build = ":TSUpdate",
+      config = function ()
+         local configs = require("nvim-treesitter.configs")
+
+         configs.setup({
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
+            sync_install = false,
+            highlight = { enable = true },
+            indent = { enable = true },
+         })
+      end
+   },
+
+   { "shaunsingh/seoul256.nvim" },
+   { "rebelot/kanagawa.nvim" },
+   {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      config = function()
+         new_background = "#1E1E24"
+         require("catppuccin").setup({
+            flavour = "mocha",
+            no_italic = true,
+            color_overrides = {
+               mocha = {
+                  base = new_background,
+                  mantle = new_background,
+                  crust = new_background,
+               }
+            }
+         })
+         vim.cmd.colorscheme "catppuccin"
+      end
+   },
+
+   {
       "folke/which-key.nvim",
       event = "VeryLazy",
       init = function()
@@ -120,23 +195,6 @@ plugins = {
       },
    },
 
-   --[[
-   {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      config = function () 
-         local configs = require("nvim-treesitter.configs")
-
-         configs.setup({
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
-            sync_install = false,
-            highlight = { enable = true },
-            indent = { enable = true },  
-         })
-      end
-   },
-   --]]
-
    {
       'romgrk/barbar.nvim',
       dependencies = {
@@ -157,52 +215,7 @@ plugins = {
    {
       "neovim/nvim-lspconfig", 
    },
-   
-   --[[
-   {
-      "ms-jpq/coq_nvim",
-      dependencies = {
-         "neovim/nvim-lspconfig",
-         "ms-jpq/coq.artifacts",
-      },
-      config = function()
-         local lspconfig = require("lspconfig")
-
-         local lsps = {
-            "pyright",
-            "clangd",
-            "tsserver"
-         }
-
-         for _,lsp in ipairs(lsps)
-         do
-            lspconfig[lsp].setup(coq.lsp_ensure_capabilities({}))
-         end
-      end
-   }
-   ]]--
-
-   --[[
-   {
-      "simrat39/rust-tools.nvim",
-      config = function()
-         local rt = require("rust-tools")
-
-         rt.setup({
-            server = {
-               on_attach = function(_, bufnr)
-                  -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-               end
-            }
-         })
-      end
-   },
-
-   ]]--
-
+  
    {
       "williamboman/mason.nvim",
       cmd = "Mason",
@@ -318,25 +331,9 @@ plugins = {
                { name = "cmdline" },
             }),
          }) 
-
-         --[[
-         local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-         local lspconfig = require("lspconfig")
-
-         local lsps = {
-            "pyright",
-            "clangd",
-            "tsserver",
-         }
-
-         for _,lsp in ipairs(lsps)
-         do
-            lspconfig[lsp].setup({
-               capabilities = lsp_capabilities
-            })
-         end
-         ]]--
       end
    }
 }
 require("lazy").setup(plugins)
+--vim.cmd[[colorscheme catppuccin-mocha]]
+--vim.cmd[[highlight Normal guibg=none guifg=none]]
