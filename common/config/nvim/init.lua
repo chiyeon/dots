@@ -12,7 +12,7 @@ vim.o.spell = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.swapfile = false
-vim.o.synmaxcol = 30
+--vim.o.synmaxcol = 30
 
 vim.o.syntax = 'enable'
 
@@ -53,8 +53,7 @@ vim.api.nvim_set_keymap("n", "<Leader>h", ":NvimTreeToggle<cr>", { silent = true
 vim.api.nvim_set_keymap("n", "<Leader>f", ":Telescope find_files<cr>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>m", ":Mason<cr>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>l", ":Lazy<cr>", { silent = true, noremap = true })
-
-vim.g.UltiSnipsExpandTrigger='<tab>'
+vim.api.nvim_set_keymap("n", "<Leader>p", ":%!prettier --stdin-filepath %<CR> --print-width vim.bo.textwidth", { silent = true, noremap = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -136,7 +135,7 @@ plugins = {
          local configs = require("nvim-treesitter.configs")
 
          configs.setup({
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "vue", "typescript" },
             sync_install = false,
             highlight = { enable = true },
             indent = { enable = true },
@@ -211,10 +210,6 @@ plugins = {
       },
       version = '^1.0.0', -- optional: only update when a new 1.x version is released
    },
-
-   {
-      "neovim/nvim-lspconfig", 
-   },
   
    {
       "williamboman/mason.nvim",
@@ -252,7 +247,6 @@ plugins = {
          "hrsh7th/cmp-cmdline",
          "L3MON4D3/LuaSnip",
          "neovim/nvim-lspconfig",
-         "quangnguyen30192/cmp-nvim-ultisnips"
       },
       event = "VeryLazy",
       config = function()
