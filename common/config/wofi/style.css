@@ -1,65 +1,49 @@
 * {
-   --dark: #141414;
-   --light: #feffd3;
+   font-family: "IosevkaNerdFont", monospace;
+   font-size: 17px;
 }
 
 window {
-    border:  0px;
-}
-
-* {
-    font-family: "Iosevka", "Font Awesome", monospace;  
-    font-size: 16px;
+   background-color: transparent; /* cachydgreen */
 }
 
 #input {
-   border-radius: 0px;
-    border: 0px;
-    margin: 0px;
-    padding: 5px;
-	color: #141414;
-	background-color: #feffd3;
-}
-
-#input:selected {
+   padding: 10px;
+   margin-bottom: 15px;
+   border-radius: 5px;
    border: none;
+   background-color: #303030; /* cachydgreen */
+   color: #ffffffff; /* cachywhite */
 }
 
 #inner-box {
-	margin: 0px;
-   color: var(--light);
-	background-color: var(--dark);
+   background-color: #303030; /* cachydblue */
 }
 
 #outer-box {
-	margin: 0px;
-	background-color: #775253;
-}
-
-#entry:selected {
-	background-color: #d0db83;
-   color: #141414;
-}
-
-#text:selected {
-   color: #141414;
-}
-
-#entry:selected {
-   color: #FCEADE !important;
-}
-
-#entry {
-    margin: 0px;
-   color: #feffd3;
-	background-color: #141414;
+   margin: 0px;
+   padding: 0px;
+   background-color: transparent; /* cachydblue */
 }
 
 #scroll {
-	background-color: #EAE8FF;
 }
 
 #text {
-	margin: 0px;
-   padding: 5px 14px;
+   padding: 8px;
+   color: #ffffffff; /* cachywhite */
+}
+
+/*
+#entry:nth-child(even){
+background-color: #222222; /* cachymblue */
+}
+*/
+
+#entry:selected {
+   background-color: #404040; /* cachymgreen */
+}
+
+#text:selected {
+   background: transparent;
 }

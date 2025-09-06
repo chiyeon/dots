@@ -149,7 +149,23 @@ plugins = {
       end
    },
 
-   { "shaunsingh/seoul256.nvim" },
+   {
+      "vague2k/vague.nvim",
+      config = function()
+         require("vague").setup({
+            transparent = true
+         })
+         vim.cmd.colorscheme "vague"
+      end
+   },
+
+   --[[
+   { 
+      "shaunsingh/seoul256.nvim",
+      config = function()
+         vim.cmd.colorscheme "seoul256"
+      end
+   },
    { "rebelot/kanagawa.nvim" },
    {
       "catppuccin/nvim",
@@ -168,10 +184,10 @@ plugins = {
                }
             }
          })
-         vim.cmd.colorscheme "catppuccin"
+   	--vim.cmd.colorscheme "catppuccin"
       end
    },
-
+   ]]
    {
       "folke/which-key.nvim",
       event = "VeryLazy",
