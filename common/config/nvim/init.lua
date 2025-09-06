@@ -83,10 +83,9 @@ plugins = {
          dashboard.section.header.val = {
             "",
             "",
-            "",
-            "       (o_",
-            "(o_    //\\",
-            "(/)_   V_/_ "
+" (\\/)     \\/      ()H()    |\\ /|",
+"( .. )  (  . >   ( .. )  ?( X. )",
+"(\")(\")  \\|/\\|/  (\")(\")\\  (')(') ",
          }
 
          local new_button = function(shortcut, text, command)
