@@ -1,0 +1,56 @@
+* {
+   font-family: "General Sans", sans-serif;
+   font-size: 16px;
+}
+
+window {
+   background-color: transparent;
+}
+
+#input {
+   padding: 10px;
+   margin-bottom: 15px;
+   border-radius: 8px;
+   border: none;
+   background-color: #303030;
+   color: white;
+}
+
+#inner-box {
+   background-color: #303030;
+   margin: 0 40px;
+}
+
+#outer-box {
+   margin: 0px;
+   padding: 0px;
+   background-color: transparent;
+}
+
+#scroll {
+}
+
+#text {
+   padding: 8px;
+   color: white;
+}
+
+#entry {
+   padding: 6px;
+   border-bottom: 0.5px solid #606060;
+   border-radius: 0px;
+}
+
+/*
+#entry:nth-child(even){
+background-color: #222222;
+}
+*/
+
+#entry:selected {
+   background-color: #808080;
+}
+
+#text:selected {
+   background: transparent;
+}

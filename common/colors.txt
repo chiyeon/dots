@@ -1,4 +1,0 @@
-nice green backgronud: 788475
-white foreground: EAE8FF
-champagne light: FCEADE
-night: 121716
