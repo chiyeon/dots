@@ -1,5 +1,5 @@
 * {
-   font-family: "General Sans", FontAwesome, Arial, sans-serif;
+   font-family: "General Sans", "Font Awesome 5 Free", "Iosevka Nerd Font", Arial, sans-serif;
    font-size: 14px;  /* Slightly smaller font size */
    font-weight: 500;
    margin: 0;
@@ -44,12 +44,11 @@ window#waybar.hidden {
 }
 
 #workspaces button.active {
-   color: @foreground;
-   background: #454545;
+   color: lightpink;
 }
 
 #workspaces button:hover {
-   background: #333333;
+   color: pink;
 }
 
 #workspaces button.urgent {
