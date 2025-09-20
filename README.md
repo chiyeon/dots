@@ -1,6 +1,13 @@
 # dots
 a collection of my personal dot files &amp; general linux configuration for a Thinkpad T14s G3.
 
+## Dependencies
+May not be comprehensive
+- ImageMagick (sixel image preview in foot with ranger)
+- Iosevka & Iosevka Nerd Font (or any other nerd font)
+- tlp
+- wayland, waybar, wofi, wlogout
+
 ## Installation
 1. Install dependencies
 2. Put `home/.config/` in `$HOME/`
