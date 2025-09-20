@@ -42,6 +42,8 @@ vim.o.history = 1000
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.opt.fillchars = {eob = " "}
+
 -- disable virtual_text in favor of lsp_lines
 vim.diagnostic.config({
    virtual_text = false,
@@ -58,6 +60,9 @@ vim.api.nvim_set_keymap("n", "<Leader>f", ":Telescope find_files<cr>", { silent 
 vim.api.nvim_set_keymap("n", "<Leader>m", ":Mason<cr>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>l", ":Lazy<cr>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>p", "=gg", { silent = true, noremap = true })
-vim.opt.fillchars = {eob = " "}
+
+
+-- transparent background
+-- vim.cmd [[ hi! Normal ctermbg=NONE guibg=NONE ]]
 
 require("config.lazy")

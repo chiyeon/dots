@@ -2,6 +2,9 @@ function fish_greeting
    fastfetch
 end
 
+set -gx VISUAL /bin/nvim
+set -gx EDITOR /bin/nvim
+
 alias py="python3" 
 alias ll="ls -lh"
 

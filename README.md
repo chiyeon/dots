@@ -18,12 +18,13 @@ udevadm control --reload-rules
 udevadm trigger
 ```
 3. Check:
-(The # is probably 6. You can check with sudo evtest, finding "Thinkpad Extra Buttons")
+
+Run: `udevadm info /sys/class/input/event#`
+
+> (The # is probably 6. You can check with sudo evtest, finding "Thinkpad Extra Buttons")
+
+Check on the right `KEYBOARD_KEY_` values, probably `4b, 4c, 4d`. They should be `previoussong, playpause, nextsong`, which can be verified in `/usr/include/linux/input-event-codes.h`
 
 ### TLP settings
 Copy `extras/tlp.conf` to `/etc/tlp.conf`
 Be sure to enable/restart tlp
-
-Run: `udevadm info /sys/class/input/event#`
-Check on the right `KEYBOARD_KEY_` values, probably `4b, 4c, 4d`. They should be `previoussong, playpause, nextsong`, which can be verified in `/usr/include/linux/input-event-codes.h`
-
