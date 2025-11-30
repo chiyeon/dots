@@ -52,7 +52,7 @@ set mouse=a
 
 set ttyfast
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 set noswapfile
 
@@ -111,38 +111,38 @@ map <leader>= gg=G " format tabs
 set listchars=tab:▸\ ,eol:¬
 map <leader>l :set list!<CR> " Toggle tabs and EOL
 
-" --- NETRW/FILESYSTEM ---
-
-" config
-let g:netrw_keepdir = 0
-let g:netrw_winsize = 30
-let g:netrw_banner = 0
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
-let g:netrw_localcopydircmd = 'cp -r'
-let g:netrw_liststyle=3
-
-hi! link netrwMarkFile Search
-
-" file system
-" function to toggle
-let g:NetrwIsOpen=0
-function! ToggleNetrw()
-    if g:NetrwIsOpen
-        let i = bufnr("$")
-        while (i >= 1)
-            if (getbufvar(i, "&filetype") == "netrw")
-                silent exe "bwipeout " . i
-            endif
-            let i = -1
-        endwhile
-
-        let g:NetrwIsOpen=0
-    else
-        let g:NetrwIsOpen=1
-        silent Lexplore
-    endif
-endfunction
-map <leader>h :call ToggleNetrw()<CR>
+" " --- NETRW/FILESYSTEM ---
+" 
+" " config
+" let g:netrw_keepdir = 0
+" let g:netrw_winsize = 30
+" let g:netrw_banner = 0
+" let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+" let g:netrw_localcopydircmd = 'cp -r'
+" let g:netrw_liststyle=3
+" 
+" hi! link netrwMarkFile Search
+" 
+" " file system
+" " function to toggle
+" let g:NetrwIsOpen=0
+" function! ToggleNetrw()
+"     if g:NetrwIsOpen
+"         let i = bufnr("$")
+"         while (i >= 1)
+"             if (getbufvar(i, "&filetype") == "netrw")
+"                 silent exe "bwipeout " . i
+"             endif
+"             let i = -1
+"         endwhile
+" 
+"         let g:NetrwIsOpen=0
+"     else
+"         let g:NetrwIsOpen=1
+"         silent Lexplore
+"     endif
+" endfunction
+" map <leader>h :call ToggleNetrw()<CR>
 
 " --- MARKDOWN SETTINGS ---
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -218,3 +218,21 @@ autocmd FileType markdown setlocal comments-=fb:- comments+=:-
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+" --- NETRW CONFIGURATION ---
+
+" 1. Basic Visuals
+let g:netrw_banner = 0           " Hide the annoying banner
+let g:netrw_liststyle = 3        " Tree view (standard file explorer look)
+let g:netrw_winsize = 25         " Set width (percentage)
+
+" 2. Behavior (The 'Normal Explorer' feel)
+let g:netrw_browse_split = 4     " IMPORTANT: Open files in the previous window, not the sidebar
+let g:netrw_altv = 1             " Split to the right (so explorer is on the left)
+let g:netrw_chk_dir = 0          " Prevent netrw from checking if directory is remote (speeds up load)
+
+" 3. Keep the Root (Project Drawer behavior)
+" This prevents netrw from changing your project root when you navigate directories
+let g:netrw_keepdir = 0
+" Use the command that actually behaves like a toggle sidebar
+noremap <silent> <leader>h :Lexplore<CR>
