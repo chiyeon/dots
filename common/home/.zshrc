@@ -30,10 +30,6 @@ setopt inc_append_history
 setopt share_history
 setopt histignorealldups
 
-# custom notes script setup
-export NOTES_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/notes"
-export PATH=$HOME/Projects/notes:$PATH
-
 # --- KEYBINDS ---
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
@@ -77,12 +73,7 @@ alias gc='f() { git checkout "$@" && git pull --rebase; }; f'
 alias gcb='f() { git checkout -b "eng/PR-$@"; }; f'
 alias gbr='git branch -r'
 
-
-
-
 # --- PATH ---
-export PATH=$(brew --prefix)/bin:$PATH
-export PATH=${PATH}:${HOME}/repos/sshrc
 
 # --- ENV ---
 export EDITOR="vim"
