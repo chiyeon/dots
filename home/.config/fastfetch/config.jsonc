@@ -11,8 +11,6 @@
   },
   "modules": [
     "break",
-    "os",
-    "host",
     "datetime",
     "uptime",
     "memory",
