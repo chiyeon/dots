@@ -1,9 +1,9 @@
-allow_images=true
+allow_images=false
 hide_scroll=true
-no_actions=true
+no_actions=false
 term=foot
 mode=drun
-width=600
+width=300
 lines=6
-prompt=search
+prompt=...
 --show
