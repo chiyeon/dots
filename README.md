@@ -1,6 +1,9 @@
 # dots
 a collection of my personal dot files &amp; general linux configuration for a Thinkpad T14s G3.
 
+> This is the `drpepper` version, which branches from `art`
+> Its slightly more minimal and cleaner, featuring pop up info
+
 ## Dependencies
 May not be comprehensive
 - ImageMagick (sixel image preview in foot with ranger)
