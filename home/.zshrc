@@ -30,16 +30,12 @@ setopt inc_append_history
 setopt share_history
 setopt histignorealldups
 
-# custom notes script setup
-export PATH=$HOME/Projects/notes:$PATH
-
 # --- KEYBINDS ---
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
-
 
 # auto complete
 
@@ -57,8 +53,6 @@ autoload -Uz bashcompinit && bashcompinit
 precmd () { print -Pn "\e]2;%-3~\a"; }
 
 # --- ALIASES ---
-alias keep_mac_awake='caffeinate -disu'
-
 alias ls='ls --color=auto -hv'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
@@ -72,15 +66,14 @@ alias mv='mv -i'
 alias ff='find . | grep -E'
 
 # checkout branch and pull rebase
-alias gc='f() { git checkout "$@" && git pull --rebase; }; f'
-alias gcb='f() { git checkout -b "eng/PR-$@"; }; f'
+alias gc="git clone"
+alias gco='f() { git checkout "$@" && git pull --rebase; }; f'
 alias gbr='git branch -r'
 
-
-
-
 # --- PATH ---
-export PATH=$(brew --prefix)/bin:$PATH
+export PATH=/opt/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH
 
 # --- ENV ---
 export EDITOR="vim"
+export PATH="$HOME/.local/bin:$PATH"
