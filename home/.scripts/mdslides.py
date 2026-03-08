@@ -42,6 +42,51 @@ def visible_len(text):
     return len(strip_ansi(text))
 
 
+def wrap_line(text, max_width):
+    """Wrap a single line to max_width, preserving ANSI codes across lines."""
+    if visible_len(text) <= max_width:
+        return [text]
+
+    # Determine continuation indent from leading visible whitespace
+    stripped = strip_ansi(text)
+    leading = len(stripped) - len(stripped.lstrip())
+    cont_indent = " " * min(leading + 2, max_width // 4)
+
+    # Tokenize into ANSI sequences, words, and whitespace runs
+    tokens = re.findall(r"\033\[[0-9;]*m|[^\s\033]+|\s+", text)
+
+    lines = []
+    current = ""
+    current_vlen = 0
+    active_codes = ""
+
+    for token in tokens:
+        if token.startswith("\033["):
+            current += token
+            if token == RESET:
+                active_codes = ""
+            else:
+                active_codes += token
+            continue
+
+        token_vlen = len(token)
+
+        if current_vlen + token_vlen > max_width and current_vlen > 0:
+            lines.append(current + RESET)
+            current = active_codes + cont_indent
+            current_vlen = len(cont_indent)
+            token = token.lstrip()
+            token_vlen = len(token)
+
+        current += token
+        current_vlen += token_vlen
+
+    if current and visible_len(current) > 0:
+        lines.append(current)
+
+    return lines if lines else [text]
+
+
 def center_line(text, cols):
     """Center a line horizontally based on its visible length."""
     vlen = visible_len(text)
@@ -234,9 +279,12 @@ def parse_slides(content):
     lines = content.split("\n")
     slides = []
     current = []
+    in_fence = False
 
     for line in lines:
-        if re.match(r"^#{1,2}(?!#)\s", line):
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+        if not in_fence and re.match(r"^#{1,2}(?!#)\s", line):
             if current:
                 slides.append(current)
             current = [line]
@@ -339,6 +387,7 @@ def render_slide(slide_lines, cols, rows, slide_num, total):
 
     # Apply global padding: 1 line top pad, 2 space left pad (or centering for H1)
     # Lines prefixed with RAW_MARKER already handle their own padding.
+    content_width = cols - len(GLOBAL_PAD) - len(GLOBAL_RPAD)
     padded = [""]  # 1 line vertical top pad
     for line in output:
         if line.startswith(RAW_MARKER):
@@ -346,9 +395,11 @@ def render_slide(slide_lines, cols, rows, slide_num, total):
         elif not line.strip():
             padded.append("")
         elif is_h1_slide:
-            padded.append(center_line(line, cols))
+            for wrapped in wrap_line(line, content_width):
+                padded.append(center_line(wrapped, cols))
         else:
-            padded.append(GLOBAL_PAD + line)
+            for wrapped in wrap_line(line, content_width):
+                padded.append(GLOBAL_PAD + wrapped)
     output = padded
 
     # Pad to fill screen (reserve last line for counter)
