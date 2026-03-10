@@ -1,79 +1,96 @@
-# --- VISUAL ---
-
-# Prompt
-# for git branches when needed
-function git_branch_name()
-{
-    branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="heads/"} {print $NF}')
-    if [[ $branch == "" ]];
-    then
-        :
-    else
-        echo '('$branch') '
-    fi
-}
-
-setopt prompt_subst
-
-PS1='%F{blue}%B%~%f %b%F{white}$(git_branch_name)%f
-%F{green}:%f%b '
-
-# no visual beep
-unsetopt BEEP
-
-# --- HISTORY ---
-HISTFILE=~/.history
-HISTSIZE=100000
-SAVEHIST=100000
-
-setopt inc_append_history
-setopt share_history
-setopt histignorealldups
-
-# --- KEYBINDS ---
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-bindkey "^[[3~" delete-char
-
-# auto complete
-
-autoload -Uz select-word-style && select-word-style bash
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-autoload -U compinit && compinit
-_comp_options+=(globdots) # hidden files
-
-autoload -Uz bashcompinit && bashcompinit
-
-# terminal window title
-precmd () { print -Pn "\e]2;%-3~\a"; }
-
-# --- ALIASES ---
-alias ls='ls --color=auto -hv'
-alias grep='grep --color=auto'
-alias diff='diff --color=auto'
-
-alias l='ls'
-alias ll='ls -l'
-alias la='ls -lA'
-
-alias mv='mv -i'
-
-alias ff='find . | grep -E'
-
-# checkout branch and pull rebase
-alias gc="git clone"
-alias gco='f() { git checkout "$@" && git pull --rebase; }; f'
-alias gbr='git branch -r'
-
-# --- PATH ---
-export PATH=/opt/cuda/bin:$PATH
-export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH
-
 # --- ENV ---
 export EDITOR="vim"
 export PATH="$HOME/.local/bin:$PATH"
+
+# History Settings
+export HISTFILE=~/.history
+export HISTSIZE=100000
+export SAVEHIST=100000
+
+# --- ZSH ---
+setopt inc_append_history
+setopt share_history
+setopt histignorealldups
+setopt prompt_subst
+unsetopt BEEP
+
+# Navigation & Logic
+setopt autocd
+setopt autopushd
+setopt pushd_ignore_dups
+setopt CORRECT
+setopt EXTENDED_GLOB
+
+# --- COMPLETION ---
+autoload -Uz compinit && compinit
+_comp_options+=(globdots)
+
+# Load bash compatibility
+autoload -Uz bashcompinit && bashcompinit
+
+# Visual Menu & Colors
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# Case-insensitive completion & matching middle of words
+zstyle ':completion:*' matcher-list 'm:{a-z criteria-Z}={A-Z criteria-a}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Group results by type with nice headers
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+
+# Bash-style word navigation
+autoload -Uz select-word-style && select-word-style bash
+
+# --- KEYBINDS ---
+# Search history for what you've already typed using Up/Down arrows
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# Standard Navigation (User Custom)
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[H"    beginning-of-line
+bindkey "^[[F"    end-of-line
+bindkey "^[[3~"   delete-char
+
+# --- ALIASES & FUNCTIONS ---
+# Core
+alias ls='ls --color=auto -hv'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -lA'
+alias mv='mv -i'
+alias ff='find . | grep -E'
+alias d='dirs -v'
+
+# Scripts
+alias notes="$HOME/.scripts/notes.sh"
+alias present="python3 $HOME/.scripts/mdslides.py"
+
+# Git Logic
+alias gc="git clone"
+alias gbr='git branch -r'
+gco() { git checkout "$@" && git pull --rebase; }
+
+# --- VISUAL ---
+# Use built-in vcs_info for faster Git branch detection
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats '(%b) '
+
+# Runs before every prompt display
+precmd() {
+    vcs_info
+    print -Pn "\e]2;%-3~\a" # Window title logic
+}
+
+# The Visual Prompt
+PROMPT='%F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
+%F{green}:%f%b '
