@@ -12,3 +12,8 @@ Create symlinks of all `home/` dot files (backs up existing files)
 ```
 
 Alternatively `./sync.sh --help`
+
+### Adjustments
+The .vimrc is set up by default for Linux systems. Set `clipboard` to `unnamed` on macOS
+
+A proper sync script would handle this for us
