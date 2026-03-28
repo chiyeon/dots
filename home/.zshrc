@@ -52,11 +52,23 @@ bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
 
 # Standard Navigation (User Custom)
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[[H"    beginning-of-line
-bindkey "^[[F"    end-of-line
-bindkey "^[[3~"   delete-char
+bindkey "^[[1;3C" forward-word      # Option + Right
+bindkey "^[[1;3D" backward-word     # Option + Left
+bindkey "^[b"     backward-word     # Alt/Opt + B (Alt-style)
+bindkey "^[f"     forward-word      # Alt/Opt + F (Alt-style)
+
+# Home/End Fixes
+bindkey "^A"   beginning-of-line
+bindkey "^E"   end-of-line
+bindkey "^[[3~"  delete-char
+
+# Word Deletion (Option + Delete / Option + Backspace)
+# This handles the two most common sequences macOS sends for Opt+Delete
+bindkey '^[^?' backward-kill-word 
+bindkey '^[d' forward-kill-word
+
+# Standard Delete key (The fn + delete combo)
+bindkey "^[[3~" delete-char
 
 # --- ALIASES & FUNCTIONS ---
 # Core
