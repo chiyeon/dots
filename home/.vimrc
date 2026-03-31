@@ -139,5 +139,20 @@ nnoremap <silent> <leader>e :Lexplore<CR>
 
 " --- PLUGINS ---
 if $VIM_ENABLE_PLUGINS == '1'
+    call plug#begin('~/.vim/autoload/plug')
 
+    Plug 'vimwiki/vimwiki'
+    " Plug 'godlygeek/tabular'
+    " Plug 'preservim/vim-markdown'
+
+    call plug#end()
+
+    let g:vimwiki_list = [{
+        \ 'path': '~/.notes/',
+        \ 'syntax': 'markdown',
+        \ 'ext': '.md',
+    \ }]
+
+    " treat all .md files as VimWiki files
+    let g:vimwiki_global_ext = 0
 endif

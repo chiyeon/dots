@@ -2,6 +2,9 @@
 export EDITOR="vim"
 export PATH="$HOME/.local/bin:$PATH"
 
+export VIM_ENABLE_PLUGINS=1
+export NOTES_DIR='$HOME/.notes'
+
 # History Settings
 export HISTFILE=~/.history
 export HISTSIZE=100000
@@ -85,6 +88,7 @@ alias d='dirs -v'
 # Scripts
 alias notes="$HOME/.scripts/notes.sh"
 alias present="python3 $HOME/.scripts/mdslides.py"
+alias journal="$HOME/.scripts/journal"
 
 # Git Logic
 alias gc="git clone"
