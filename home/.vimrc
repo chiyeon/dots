@@ -76,9 +76,9 @@ nnoremap B ^
 nnoremap E $
 
 " delete without yanking
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
+" nnoremap d "_d
+" nnoremap D "_D
+" vnoremap d "_d
 
 " stay in visual mode after indent
 vnoremap > >gv
@@ -95,9 +95,26 @@ nnoremap <CR> :nohlsearch<CR><CR>
 nnoremap <leader>p gqip
 nnoremap <leader>= gg=G
 
+" buffers
+nnoremap <leader>b :buffers<CR>
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bp :bprev<CR>
+nnoremap <leader>v <C-w>v
+nnoremap <leader>s <C-w>s
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
+" tabedit
+nnoremap <leader>te :tabedit<CR>
+nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>tn :tabnext<CR>
+nnoremap <leader>tp :tabprev<CR>
+
 " toggle whitespace visualization
 set listchars=tab:▸\ ,eol:¬
-nnoremap <leader>l :set list!<CR>
+nnoremap <leader>w :set list!<CR>
 
 " --- MARKDOWN ---
 augroup markdown
@@ -118,4 +135,9 @@ let g:netrw_altv = 1
 let g:netrw_fastbrowse = 1
 let g:netrw_keepdir = 0
 
-nnoremap <silent> <leader>h :Lexplore<CR>
+nnoremap <silent> <leader>e :Lexplore<CR>
+
+" --- PLUGINS ---
+if $VIM_ENABLE_PLUGINS == '1'
+
+endif
