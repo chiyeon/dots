@@ -37,7 +37,7 @@ syntax on
 filetype plugin indent on
 
 " --- INDENTATION ---
-set smarttab
+" set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -136,6 +136,49 @@ let g:netrw_fastbrowse = 1
 let g:netrw_keepdir = 0
 
 nnoremap <silent> <leader>e :Lexplore<CR>
+
+" --- SPLASH SCREEN ---
+function! s:Splash()
+  if argc() || line('$') != 1 || getline(1) != '' | return | endif
+  let l:art = [
+    \ '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⢴⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠈⠳⡄⠀⠀⠀',
+    \ '⠉⠢⡀⠀⣀⣀⠤⠤⠤⣀⣰⠉⠀⠈⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢦⡀⠈⠢⡀⠀',
+    \ '⠀⠀⠙⠉⣀⣄⡀⠀⠀⠀⣡⣀⣀⣀⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢄⠀⠱⡄',
+    \ '⡀⠀⡴⢻⣿⣦⡹⠀⠀⢸⢹⣿⡇⣸⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⠀⠀⢣',
+    \ '⢇⠀⠧⠬⠿⡿⠁⠀⠀⠈⠙⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠟⠉⠀⢀⣠⠞',
+    \ '⠈⡆⠀⠀⠀⠀⠀⢀⡶⢄⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡞⠉⠁⠀',
+    \ '⠀⠱⡀⠀⠀⠀⠀⠸⠀⠀⠑⠄⠀⠀⠀⠸⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡄⠀⣷⠀⠀⠀',
+    \ ]
+  let l:top = max([0, (winheight(0) - len(l:art)) / 2])
+  let l:lpad = max([0, (winwidth(0) - strdisplaywidth(l:art[0])) / 2])
+  let l:sp = repeat(' ', l:lpad)
+  let l:lines = repeat([''], l:top) + map(copy(l:art), 'l:sp . v:val')
+  call setline(1, l:lines)
+  setlocal nomodified buftype=nofile nonumber noruler
+  exe "setlocal fillchars+=eob:\\ "
+  " defer the clear listener — CursorMoved fires during VimEnter startup
+  " and would wipe the splash before the screen ever renders
+  call timer_start(0, {_ -> s:SplashWatch()})
+endfunction
+
+function! s:SplashWatch()
+  augroup splash_clear
+    autocmd! CursorMoved,InsertEnter <buffer> call s:SplashClear()
+  augroup END
+endfunction
+
+function! s:SplashClear()
+  augroup splash_clear
+    autocmd!
+  augroup END
+  silent! %delete _
+  setlocal buftype= number ruler nomodified fillchars<
+endfunction
+
+augroup splash
+  autocmd!
+  autocmd VimEnter * call s:Splash()
+augroup END
 
 " --- PLUGINS ---
 if $VIM_ENABLE_PLUGINS == '1'
