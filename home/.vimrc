@@ -120,7 +120,7 @@ nnoremap <leader>w :set list!<CR>
 augroup markdown
   autocmd!
   autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
-  autocmd FileType markdown setlocal spell spelllang=en_us
+  " autocmd FileType markdown setlocal spell spelllang=en_us
   " autocmd FileType markdown setlocal conceallevel=2
   autocmd FileType markdown let &l:comments = 'b:- [x],b:- [ ],b:-,b:*'
   autocmd FileType markdown setlocal formatoptions+=ro
