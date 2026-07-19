@@ -91,9 +91,18 @@ alias present="python3 $HOME/.scripts/mdslides.py"
 alias journal="$HOME/.scripts/journal"
 
 # Git Logic
-alias gc="git clone"
-alias gbr='git branch -r'
-gco() { git checkout "$@" && git pull --rebase; }
+alias gs='git status'
+alias ga='git add'
+alias gps='git push'
+alias gpl='git pull'
+alias gco='git commit'
+alias gch='git checkout'
+alias gcl='git clone'
+alias gb='git branch'
+alias gd='git diff'
+#gch() { git checkout "$@" && git pull --rebase; }
+
+alias clauded='claude --dangerously-skip-permissions'
 
 # --- VISUAL ---
 # Use built-in vcs_info for faster Git branch detection
@@ -108,5 +117,10 @@ precmd() {
 }
 
 # The Visual Prompt
-PROMPT='%F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
+if [[ -n "$SSH_CONNECTION" ]]; then
+  PROMPT='%F{yellow}%n@%m%f %F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
 %F{green}:%f%b '
+else
+  PROMPT='%F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
+%F{green}:%f%b '
+fi
