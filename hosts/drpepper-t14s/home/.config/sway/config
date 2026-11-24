@@ -19,6 +19,19 @@ gaps inner 4
 
 default_border none
 
+# Title bars (tabbed/stacked) share the swaybar / mako palette
+font pango:General Sans 11
+titlebar_padding 8 3
+title_align left
+
+#                       border   background text     indicator child_border
+client.focused          #4f8a8b  #4f8a8b    #1a1d1b  #4f8a8b   #4f8a8b
+client.focused_inactive #2a2e2b  #2a2e2b    #d8d6cf  #2a2e2b   #2a2e2b
+client.focused_tab_title #2a2e2b #2a2e2b    #d8d6cf
+client.unfocused        #1a1d1b  #1a1d1b    #5a5d5b  #1a1d1b   #1a1d1b
+client.urgent           #bf616a  #bf616a    #1a1d1b  #bf616a   #bf616a
+client.background       #1a1d1b
+
 exec easyeffects -w
 exec mako 
 exec nm-applet --indicator
