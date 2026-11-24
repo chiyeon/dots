@@ -137,7 +137,8 @@ function! s:FocusOff()
   endfor
   unlet! t:focus_pads
   let &laststatus = 2
-  setlocal number< colorcolumn<
+  if exists('s:focus_split_hl') | call hlset(s:focus_split_hl) | unlet s:focus_split_hl | endif
+  setlocal number< colorcolumn< fillchars<
   if &filetype ==# 'markdown' | setlocal nonumber colorcolumn= | endif
 endfunction
 
@@ -155,7 +156,10 @@ function! s:FocusToggle()
     wincmd p
   endfor
   set laststatus=0
-  setlocal nonumber colorcolumn=
+  setlocal nonumber colorcolumn= fillchars=vert:\ ,eob:\ 
+  " hide the split borders: blank separator chars with no reverse/background
+  let s:focus_split_hl = hlget('VertSplit')
+  highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=NONE guibg=NONE
 endfunction
 
 nnoremap <silent> <leader>W :call <SID>FocusToggle()<CR>
