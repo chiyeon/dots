@@ -1,0 +1,2 @@
+# zathura config used by preview.sh: space closes the window
+map <Space> quit
