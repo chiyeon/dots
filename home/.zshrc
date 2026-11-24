@@ -62,6 +62,7 @@ unset k
 
 # --- ALIASES & FUNCTIONS ---
 # Core
+alias yerb='systemd-inhibit --what=idle:sleep --mode=block --why="Yerba matte in system" sleep infinity'
 # GNU ls has --color/-v; BSD ls (macOS) uses -G
 if ls --color=auto -d . &>/dev/null; then
     alias ls='ls --color=auto -hv'
