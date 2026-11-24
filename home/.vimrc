@@ -62,8 +62,6 @@ let mapleader = " "
 " movement
 nnoremap j gj
 nnoremap k gk
-nnoremap B ^
-nnoremap E $
 
 " stay in visual mode after indent
 vnoremap > >gv
@@ -74,14 +72,13 @@ nnoremap <leader>? :map <leader><CR>
 
 " clear search highlight
 nnoremap <leader><space> :let @/=''<CR>
-nnoremap <CR> :nohlsearch<CR><CR>
 
 " formatting
 nnoremap <leader>p gqip
 nnoremap <leader>= gg=G
 
 " buffers
-nnoremap <leader>b :buffers<CR>
+nnoremap <leader>bl :buffers<CR>
 nnoremap <leader>bn :bnext<CR>
 nnoremap <leader>bp :bprev<CR>
 nnoremap <leader>v <C-w>v
