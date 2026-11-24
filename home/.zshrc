@@ -77,6 +77,8 @@ alias la='ls -lA'
 alias mv='mv -i'
 alias ff='find . | grep -E'
 alias d='dirs -v'
+alias t='tmux'
+alias v='vim'
 (( $+commands[bat] )) && alias cat='bat --paging=never'
 
 # Git Logic
