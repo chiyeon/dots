@@ -42,39 +42,38 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 autoload -Uz select-word-style && select-word-style bash
 
 # --- KEYBINDS ---
-# Search history for what you've already typed using Up/Down arrows
+# Up/Down search history for what you've already typed
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
+for k in '^[[A' '^[OA'; do bindkey $k up-line-or-beginning-search; done
+for k in '^[[B' '^[OB'; do bindkey $k down-line-or-beginning-search; done
 
-bindkey '^[[A' up-line-or-beginning-search
-bindkey '^[[B' down-line-or-beginning-search
-
-# make sure ctrl+r works in tmux
+# Make sure ctrl+r works in tmux
 bindkey '^R' history-incremental-search-backward
 
-# Standard Navigation (User Custom)
-# bindkey "^[[1;3C" forward-word      # Option + Right
-# bindkey "^[[1;3D" backward-word     # Option + Left
-bindkey "^[b"     backward-word     # Alt/Opt + B (Alt-style)
-bindkey "^[f"     forward-word      # Alt/Opt + F (Alt-style)
+# Word movement: Alt/Ctrl + Left/Right (plus Alt+B/F)
+for k in '^[[1;3D' '^[[1;5D' '^[b'; do bindkey $k backward-word; done
+for k in '^[[1;3C' '^[[1;5C' '^[f'; do bindkey $k forward-word; done
 
-# Home/End Fixes
-bindkey "^A"   beginning-of-line
-bindkey "^E"   end-of-line
-bindkey "^[[3~"  delete-char
+# Home/End/Delete (sequences vary by terminal, so bind the common ones)
+for k in '^A' '^[[H' '^[OH' '^[[1~'; do bindkey $k beginning-of-line; done
+for k in '^E' '^[[F' '^[OF' '^[[4~'; do bindkey $k end-of-line; done
+bindkey '^[[3~' delete-char
 
-# Word Deletion (Option + Delete / Option + Backspace)
-# This handles the two most common sequences macOS sends for Opt+Delete
-bindkey '^[^?' backward-kill-word 
-bindkey '^[d' forward-kill-word
-
-# Standard Delete key (The fn + delete combo)
-bindkey "^[[3~" delete-char
+# Word deletion: Alt+Backspace / Alt+D
+bindkey '^[^?' backward-kill-word
+bindkey '^[d'  forward-kill-word
+unset k
 
 # --- ALIASES & FUNCTIONS ---
 # Core
-alias ls='ls --color=auto -hv'
+# GNU ls has --color/-v; BSD ls (macOS) uses -G
+if ls --color=auto -d . &>/dev/null; then
+    alias ls='ls --color=auto -hv'
+else
+    alias ls='ls -Gh'
+fi
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias l='ls'
