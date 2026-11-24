@@ -1,10 +1,9 @@
 #!/bin/sh
-# Toggle mako do-not-disturb; "on" is sent before entering, "off" after leaving.
+# Toggle mako do-not-disturb. The "dnd" summary stays visible in the mode (see mako config).
 if makoctl mode | grep -qx do-not-disturb; then
     makoctl mode -r do-not-disturb
-    notify-send -t 1500 "DND off"
+    notify-send -t 2500 -h string:x-canonical-private-synchronous:dnd dnd "do not disturb off 󰂚"
 else
-    notify-send -t 1500 "DND on"
-    sleep 0.3
     makoctl mode -a do-not-disturb
+    notify-send -t 2500 -h string:x-canonical-private-synchronous:dnd dnd "do not disturb on 󰂛"
 fi

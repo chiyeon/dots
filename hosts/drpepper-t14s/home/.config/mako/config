@@ -42,5 +42,12 @@ progress-color=#2e2920
 default-timeout=3000
 width=300
 
+[summary="dnd"]
+format=%b
+
 [mode=do-not-disturb]
 invisible=1
+
+# keep the dnd toggle's own notice visible while the mode is on
+[mode=do-not-disturb summary="dnd"]
+invisible=0
