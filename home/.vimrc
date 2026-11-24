@@ -193,7 +193,7 @@ if $VIM_ENABLE_PLUGINS == '1'
     call plug#end()
 
     let g:vimwiki_list = [{
-        \ 'path': '~/.notes/',
+        \ 'path': (empty($NOTES_DIR) ? '~/.notes' : $NOTES_DIR) . '/',
         \ 'syntax': 'markdown',
         \ 'ext': '.md',
     \ }]

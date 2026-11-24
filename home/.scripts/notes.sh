@@ -1,5 +1,5 @@
 #!/bin/bash
-NOTES_DIR="${NOTES_DIR:-$HOME/notes}"
+NOTES_DIR="${NOTES_DIR:-$HOME/.notes}"
 NOTES_VIEWER="${NOTES_VIEWER:-glow}"
 
 command="$1"
