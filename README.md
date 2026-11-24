@@ -20,6 +20,14 @@ After syncing, set default apps (vim in a terminal for text, imv for images, vlc
 ```
 The terminal comes from `$TERMINAL` (defaults to foot, then kitty).
 
+### Preview
+macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway window. `preview <file>` toggles it, as does space in thunar.
+```
+sudo pacman -S --needed mpv imv bat zathura zathura-pdf-mupdf
+echo 'include ~/.config/sway/config.d/*' >> ~/.config/sway/config
+~/.scripts/thunar-preview.sh
+```
+
 ### Local overrides
 Machine-specific settings go in `~/.zshenv.local`, `~/.zshrc.local` and `~/.config/tmux/tmux.local.conf` (all untracked, sourced if present).
 
