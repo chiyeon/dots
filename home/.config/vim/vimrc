@@ -30,6 +30,23 @@ let &t_EI = "\<Esc>[2 q"
 
 " --- SYNTAX & FILETYPES ---
 syntax on
+
+" spellcheck: curly underline instead of solid background blocks
+if $TERM =~# 'foot\|tmux\|kitty\|wezterm\|alacritty'
+  let &t_Cs = "\e[4:3m"
+  let &t_Ce = "\e[4:0m"
+endif
+function! s:SpellColors()
+  highlight SpellBad   cterm=undercurl ctermfg=NONE ctermbg=NONE ctermul=203 gui=undercurl guisp=#ff5f5f
+  highlight SpellCap   cterm=NONE      ctermfg=NONE ctermbg=NONE
+  highlight SpellRare  cterm=NONE      ctermfg=NONE ctermbg=NONE
+  highlight SpellLocal cterm=NONE      ctermfg=NONE ctermbg=NONE
+endfunction
+call s:SpellColors()
+augroup spell_colors
+  autocmd!
+  autocmd ColorScheme * call s:SpellColors()
+augroup END
 filetype plugin indent on
 
 " --- INDENTATION ---
