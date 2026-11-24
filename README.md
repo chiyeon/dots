@@ -1,14 +1,19 @@
 # chiyeon/dots
 a collection of... dots
 
-The `main` branch contains common, system-agnostic scripts & configuration for \*NIX systems. it tries to stay up to date... it tries.
+`home/` holds common, system-agnostic scripts & configuration for \*NIX systems (macOS and any linux). it tries to stay up to date... it tries.
 
-The other branches are device specific configurations, latest being `drpepper-t14s` for the Thinkpad T14s Gen3
+`hosts/<name>/home/` holds device specific configuration layered on top, e.g. `drpepper-t14s` (Thinkpad T14s Gen3, sway) and `twilight-t480s`. `hosts/<name>/extras/` has things that aren't dotfiles (fonts, wallpapers, system configs).
 
 ## Setup
 Create symlinks of all `home/` dot files (backs up existing files)
 ```
 ./sync.sh
+```
+
+Add a host to also link its files; they override `home/` where both have the same file
+```
+./sync.sh drpepper-t14s
 ```
 
 Alternatively `./sync.sh --help`
@@ -21,10 +26,9 @@ mime-defaults
 The terminal comes from `$TERMINAL` (defaults to foot, then kitty).
 
 ### Preview
-macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway window. `preview <file>` toggles it (or switches to another file), as does space in thunar.
+macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway window (sway rules live in the `drpepper-t14s` host). `preview <file>` toggles it (or switches to another file), as does space in thunar.
 ```
 sudo pacman -S --needed mpv imv bat zathura zathura-pdf-mupdf
-echo 'include ~/.config/sway/config.d/*' >> ~/.config/sway/config
 thunar-preview
 ```
 
