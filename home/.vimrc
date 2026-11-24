@@ -175,12 +175,27 @@ augroup splash
 augroup END
 
 " --- PLUGINS ---
-if $VIM_ENABLE_PLUGINS == '1'
-    call plug#begin('~/.vim/plugged')
+" vim-plug downloads itself and any missing plugins on first run
+let s:vimdir = exists('$MYVIMDIR') ? substitute($MYVIMDIR, '/$', '', '') : expand('~/.vim')
+let s:plug = s:vimdir . '/autoload/plug.vim'
+if $VIM_ENABLE_PLUGINS == '1' && empty(glob(s:plug)) && executable('curl')
+    silent execute '!curl -fsLo ' . shellescape(s:plug) . ' --create-dirs '
+        \ . 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+if $VIM_ENABLE_PLUGINS == '1' && filereadable(s:plug)
+    execute 'source ' . fnameescape(s:plug)
+    call plug#begin(s:vimdir . '/plugged')
 
     Plug 'vimwiki/vimwiki'
 
     call plug#end()
+
+    augroup plug_auto
+      autocmd!
+      autocmd VimEnter * if !empty(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        \ | PlugInstall --sync | source $MYVIMRC | endif
+    augroup END
 
     let g:vimwiki_list = [{
         \ 'path': (empty($NOTES_DIR) ? '~/.notes' : $NOTES_DIR) . '/',
