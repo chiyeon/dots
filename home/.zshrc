@@ -69,6 +69,7 @@ else
     alias ls='ls -Gh'
 fi
 alias grep='grep --color=auto'
+alias g='grep'
 alias diff='diff --color=auto'
 alias l='ls'
 alias ll='ls -l'
@@ -76,6 +77,7 @@ alias la='ls -lA'
 alias mv='mv -i'
 alias ff='find . | grep -E'
 alias d='dirs -v'
+(( $+commands[bat] )) && alias cat='bat --paging=never'
 
 # Git Logic
 alias gs='git status'
