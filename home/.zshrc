@@ -1,10 +1,4 @@
-# --- ENV ---
-export EDITOR="vim"
-export PATH="$HOME/.local/bin:$PATH"
-
-export VIM_ENABLE_PLUGINS=1
-export NOTES_DIR="$HOME/.notes"
-
+# --- ENV --- (exported vars live in ~/.zshenv)
 # History Settings
 HISTFILE=~/.history
 HISTSIZE=100000
