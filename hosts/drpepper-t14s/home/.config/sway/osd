@@ -9,17 +9,16 @@ volume)
     esac
     v=$(pamixer --get-volume)
     if pamixer --get-mute | grep -q true; then
-        cat=muted icon=󰝟
+        cat=muted
     else
         cat=normal
-        if [ "$v" -eq 0 ]; then icon=󰕿; elif [ "$v" -lt 50 ]; then icon=󰖀; else icon=󰕾; fi
     fi
     ;;
 brightness)
     brightnessctl -q set "$2"
     v=$(brightnessctl -m | cut -d, -f4 | tr -d %)
-    cat=normal icon=󰃠
+    cat=normal
     ;;
 *) echo "usage: osd volume|brightness <change>" >&2; exit 1 ;;
 esac
-notify-send -c "$cat" -h "string:x-canonical-private-synchronous:$1" -h "int:value:$v" "$1" "$icon  $v%"
+notify-send -c "$cat" -h "string:x-canonical-private-synchronous:$1" -h "int:value:$v" "$1" "$1"
