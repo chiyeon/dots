@@ -183,7 +183,7 @@ augroup END
 
 " --- PLUGINS ---
 if $VIM_ENABLE_PLUGINS == '1'
-    call plug#begin('~/.vim/autoload/plug')
+    call plug#begin('~/.vim/plugged')
 
     Plug 'vimwiki/vimwiki'
     " Plug 'godlygeek/tabular'
