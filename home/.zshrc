@@ -6,12 +6,11 @@ export VIM_ENABLE_PLUGINS=1
 export NOTES_DIR="$HOME/.notes"
 
 # History Settings
-export HISTFILE=~/.history
-export HISTSIZE=100000
-export SAVEHIST=100000
+HISTFILE=~/.history
+HISTSIZE=100000
+SAVEHIST=100000
 
 # --- ZSH ---
-setopt inc_append_history
 setopt share_history
 setopt histignorealldups
 setopt prompt_subst
@@ -27,9 +26,6 @@ setopt EXTENDED_GLOB
 # --- COMPLETION ---
 autoload -Uz compinit && compinit
 _comp_options+=(globdots)
-
-# Load bash compatibility
-autoload -Uz bashcompinit && bashcompinit
 
 # Visual Menu & Colors
 zstyle ':completion:*' menu select
@@ -103,7 +99,6 @@ alias gch='git checkout'
 alias gcl='git clone'
 alias gb='git branch'
 alias gd='git diff'
-#gch() { git checkout "$@" && git pull --rebase; }
 
 # clawd
 alias clauded='claude --dangerously-skip-permissions'
@@ -126,14 +121,10 @@ _prompt_precmd() {
 }
 add-zsh-hook precmd _prompt_precmd
 
-# The Visual Prompt
-if [[ -n "$SSH_CONNECTION" ]]; then
-    PROMPT='%F{yellow}%n@%m%f %F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
-%F{green}:%f%b '
-else
-    PROMPT='%F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
-%F{green}:%f%b '
-fi
+# The Visual Prompt (user@host shown over ssh)
+[[ -n $SSH_CONNECTION ]] && _prompt_host='%F{yellow}%n@%m%f ' || _prompt_host=''
+PROMPT="$_prompt_host"'%F{blue}%B%~%b%f %F{white}${vcs_info_msg_0_}%f
+%F{green}:%f '
 
 fastfetch
 
