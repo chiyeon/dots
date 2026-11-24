@@ -238,8 +238,32 @@ if $VIM_ENABLE_PLUGINS == '1' && filereadable(s:plug)
     call plug#begin(s:vimdir . '/plugged')
 
     Plug 'vimwiki/vimwiki'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+    Plug 'preservim/vim-pencil'
 
     call plug#end()
+
+    " writing: Goyo replaces the built-in focus mode, Limelight dims other paragraphs
+    let g:goyo_width = 80
+    let g:limelight_conceal_ctermfg = 240
+    let g:limelight_conceal_guifg = '#585858'
+    nnoremap <silent> <leader>W :Goyo<CR>
+    augroup goyo_limelight
+      autocmd!
+      autocmd User GoyoEnter nested Limelight
+      autocmd User GoyoLeave nested Limelight!
+    augroup END
+
+    " pencil: prose-aware soft wrapping and motions for markdown
+    let g:pencil#wrapModeDefault = 'soft'
+    let g:pencil#conceallevel = 0
+    " pencil clears this group before it ever creates it; define it up front
+    augroup pencil_autoformat | augroup END
+    augroup pencil_init
+      autocmd!
+      autocmd FileType markdown call pencil#init()
+    augroup END
 
     augroup plug_auto
       autocmd!
