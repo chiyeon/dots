@@ -1,6 +1,7 @@
 " simple vimrc, optional plugins via VIM_ENABLE_PLUGINS=1
 
 " --- GENERAL ---
+let mapleader = " "   " set first: maps below expand <leader> when defined
 set encoding=utf-8
 set timeoutlen=300
 set hidden
@@ -62,7 +63,6 @@ set showmatch
 set splitbelow splitright
 
 " --- KEYBINDINGS ---
-let mapleader = " "
 
 " movement
 nnoremap j gj
