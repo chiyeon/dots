@@ -1,12 +1,18 @@
 #!/bin/bash
-# quick look style preview: opens a floating window, run again to close it
+# quick look style preview: opens a floating window; run again on the same file to close it, on another file to switch
 # floating/sizing comes from ~/.config/sway/config.d/preview
 
-# toggle: close an open preview and stop
-swaymsg -q '[con_mark="^preview$"] kill' 2>/dev/null && exit 0
-
 file="$1"
+state="${XDG_RUNTIME_DIR:-/tmp}/preview-file"
+
+# toggle: close an open preview; stop if it was showing this same file,
+# otherwise fall through and preview the new one
+if swaymsg -q '[con_mark="^preview$"] kill' 2>/dev/null; then
+    [ "$(cat "$state" 2>/dev/null)" = "$(realpath -- "$file" 2>/dev/null)" ] && exit 0
+fi
+
 [ -e "$file" ] || { echo "usage: preview <file>"; exit 1; }
+realpath -- "$file" > "$state"
 
 # terminal window for text-ish previews; space quits less
 term() {

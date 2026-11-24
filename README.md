@@ -21,7 +21,7 @@ mime-defaults
 The terminal comes from `$TERMINAL` (defaults to foot, then kitty).
 
 ### Preview
-macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway window. `preview <file>` toggles it, as does space in thunar.
+macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway window. `preview <file>` toggles it (or switches to another file), as does space in thunar.
 ```
 sudo pacman -S --needed mpv imv bat zathura zathura-pdf-mupdf
 echo 'include ~/.config/sway/config.d/*' >> ~/.config/sway/config
