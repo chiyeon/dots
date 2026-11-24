@@ -118,7 +118,6 @@ add-zsh-hook precmd _prompt_precmd
 PROMPT="$_prompt_host"'%F{blue}%B%~%b%f %F{white}${vcs_info_msg_0_}%f
 %F{green}:%f '
 
-fastfetch
 
 # install-font [-y|--yes] <dir> — install all fonts in <dir> (user-local, or system-wide as root)
 install-font() {
@@ -157,3 +156,10 @@ install-font() {
   command -v fc-cache >/dev/null && fc-cache -f $dest >/dev/null
   echo "Installed ${#fonts} font(s) to $dest"
 }
+
+# --- LOCAL ---
+# machine-specific overrides, not tracked in dots
+[[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# greeting only in top-level shells (not tmux panes or nested shells)
+[[ -z $TMUX && $SHLVL -eq 1 ]] && (( $+commands[fastfetch] )) && fastfetch
