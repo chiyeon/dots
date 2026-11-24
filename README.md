@@ -14,7 +14,7 @@ Create symlinks of all `home/` dot files (backs up existing files)
 Alternatively `./sync.sh --help`
 
 ### Default apps
-After syncing, set default apps (vim in a terminal for text, feh for images, vlc for audio/video):
+After syncing, set default apps (vim in a terminal for text, imv for images, vlc for audio/video):
 ```
 ~/.scripts/mime-defaults.sh
 ```

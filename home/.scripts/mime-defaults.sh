@@ -13,7 +13,7 @@ set_default vim-term.desktop \
     text/plain text/markdown text/x-log application/x-shellscript \
     application/json application/x-yaml application/toml
 
-set_default feh.desktop \
+set_default imv.desktop \
     image/png image/jpeg image/gif image/webp image/bmp image/tiff image/svg+xml
 
 set_default vlc.desktop \
