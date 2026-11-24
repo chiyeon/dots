@@ -128,8 +128,6 @@ precmd() {
 if [[ -n "$SSH_CONNECTION" ]]; then
     PROMPT='%F{yellow}%n@%m%f %F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
 %F{green}:%f%b '
-
-    export TERM="xterm-256color"
 else
     PROMPT='%F{blue}%B%~%f %b%F{white}${vcs_info_msg_0_}%f
 %F{green}:%f%b '
