@@ -1,2 +1,4 @@
 # floating quick look window for ~/.scripts/preview.sh
-for_window [app_id="^preview$"] mark --add preview, floating enable, resize set 60 ppt 70 ppt, move position center
+# preview-video sizes itself to the video (mpv autofit), so it skips the resize
+for_window [app_id="^preview$"] floating enable, resize set 60 ppt 70 ppt
+for_window [app_id="^preview"] mark --add preview, floating enable, move position center

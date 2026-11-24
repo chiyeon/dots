@@ -25,7 +25,8 @@ mime="$(file --brief --mime-type -- "$file")"
 
 case "$mime" in
     video/*|audio/*)
-        mpv --wayland-app-id=preview --force-window=immediate --keep-open=yes \
+        mpv --wayland-app-id=preview-video --force-window=yes --keep-open=yes \
+            --autofit-larger=80%x85% \
             -- "$file" &>/dev/null &
         ;;
     image/*)
