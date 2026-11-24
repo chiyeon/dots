@@ -1,0 +1,2 @@
+# floating quick look window for ~/.scripts/preview.sh
+for_window [app_id="^preview$"] mark --add preview, floating enable, resize set 60 ppt 70 ppt, move position center
