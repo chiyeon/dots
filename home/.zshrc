@@ -115,43 +115,8 @@ PROMPT="$_prompt_host"'%F{blue}%B%~%b%f %F{white}${vcs_info_msg_0_}%f
 %F{green}:%f '
 
 
-# install-font [-y|--yes] <dir> — install all fonts in <dir> (user-local, or system-wide as root)
-install-font() {
-  emulate -L zsh
-  setopt extended_glob null_glob
-  local yes=0 src
-  while (( $# )); do
-    case $1 in
-      -y|--yes) yes=1 ;;
-      -h|--help) echo "usage: install-font [-y|--yes] <dir>"; return 0 ;;
-      -*) echo "install-font: unknown option $1" >&2; return 1 ;;
-      *) src=$1 ;;
-    esac
-    shift
-  done
-  [[ -d $src ]] || { echo "usage: install-font [-y|--yes] <dir>" >&2; return 1; }
-
-  local dest
-  if (( EUID == 0 )); then dest=/usr/local/share/fonts
-  else dest=${XDG_DATA_HOME:-$HOME/.local/share}/fonts; fi
-
-  local -a fonts
-  fonts=( $src/**/*.(#i)(ttf|otf|ttc|otc|woff|woff2|pcf|bdf)(.) )
-  (( ${#fonts} )) || { echo "install-font: no fonts found in $src" >&2; return 1; }
-
-  echo "Fonts to install (${#fonts}):"
-  printf '  %s\n' ${fonts:t}
-  echo "Destination: $dest"
-  if (( ! yes )); then
-    local reply
-    read -q "reply?Install ${#fonts} font(s) to $dest? [y/N] " || { echo; echo "Aborted."; return 1; }
-    echo
-  fi
-
-  mkdir -p $dest && cp -f -- $fonts $dest/ || return 1
-  command -v fc-cache >/dev/null && fc-cache -f $dest >/dev/null
-  echo "Installed ${#fonts} font(s) to $dest"
-}
+# install fonts for this user, e.g. install-font **/*.(ttf|otf)
+install-font() { mkdir -p ~/.local/share/fonts && cp -- "$@" ~/.local/share/fonts/ && fc-cache -f; }
 
 # --- LOCAL ---
 # machine-specific overrides, not tracked in dots
