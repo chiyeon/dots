@@ -4,6 +4,7 @@ set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTS_HOME="$SCRIPT_DIR/home"
+HOSTS_DIR="$SCRIPT_DIR/hosts"
 
 # ---------------------------------------------------------------------------
 # Options
@@ -11,6 +12,7 @@ DOTS_HOME="$SCRIPT_DIR/home"
 MODE=""          # "" | "skip" | "overwrite"
 DRY_RUN=false
 TARGET_FILES=()  # specific files to sync (relative to home/)
+HOST=""          # optional host under hosts/, layered over home/
 
 # ---------------------------------------------------------------------------
 # Output
@@ -36,10 +38,32 @@ err() {
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+# Source roots in order; later roots override earlier ones per file
+ROOTS=()
+
+rel_path() {
+    local src="$1" root
+    for root in "${ROOTS[@]}"; do
+        if [[ "$src" == "$root"/* ]]; then
+            echo "${src#"$root"/}"
+            return
+        fi
+    done
+}
+
 get_target() {
-    local src="$1"
-    local rel="${src#"$DOTS_HOME"/}"
-    echo "$HOME/$rel"
+    echo "$HOME/$(rel_path "$1")"
+}
+
+# Path of a home-relative file in the highest-priority root that has it
+resolve_file() {
+    local rel="$1" i
+    for (( i=${#ROOTS[@]}-1; i>=0; i-- )); do
+        if [[ -e "${ROOTS[i]}/$rel" ]]; then
+            echo "${ROOTS[i]}/$rel"
+            return
+        fi
+    done
 }
 
 display_path() {
@@ -142,9 +166,11 @@ sync_file() {
 # ---------------------------------------------------------------------------
 usage() {
     cat <<EOF
-Usage: $(basename "$0") [OPTIONS]
+Usage: $(basename "$0") [OPTIONS] [HOST]
 
 Sync dotfiles from the repo's home/ directory to \$HOME via symlinks.
+With HOST, hosts/HOST/home/ is synced too, overriding files from home/.
+Available hosts: $(ls "$HOSTS_DIR" 2>/dev/null | tr '\n' ' ')
 
 Options:
   -s, --skip-existing   Skip files that already exist (mutually exclusive with -o)
@@ -155,6 +181,7 @@ Options:
 
 Examples:
   $(basename "$0")
+  $(basename "$0") drpepper-t14s
   $(basename "$0") --skip-existing
   $(basename "$0") --overwrite --dry-run
   $(basename "$0") --files .zshrc .config/nvim/init.lua
@@ -190,8 +217,13 @@ parse_args() {
                 usage
                 exit 0
                 ;;
-            *)
+            -*)
                 err "unknown option: $1"
+                ;;
+            *)
+                [[ -n "$HOST" ]] && err "only one host allowed (got '$HOST' and '$1')"
+                HOST="$1"
+                shift
                 ;;
         esac
     done
@@ -204,19 +236,38 @@ main() {
     parse_args "$@"
 
     [[ ! -d "$DOTS_HOME" ]] && err "home/ directory not found at $DOTS_HOME"
+    ROOTS=("$DOTS_HOME")
+
+    if [[ -n "$HOST" ]]; then
+        if [[ -d "$HOSTS_DIR/$HOST/home" ]]; then
+            ROOTS+=("$HOSTS_DIR/$HOST/home")
+        else
+            echo "warning: no host '$HOST' in hosts/, syncing common files only" >&2
+            HOST=""
+        fi
+    fi
 
     local files=()
 
     if [[ ${#TARGET_FILES[@]} -gt 0 ]]; then
         for f in "${TARGET_FILES[@]}"; do
-            local src="$DOTS_HOME/$f"
-            [[ ! -e "$src" ]] && err "'$f' not found in repo (expected at $src)"
+            local src
+            src="$(resolve_file "$f")"
+            [[ -z "$src" ]] && err "'$f' not found in repo"
             files+=("$src")
         done
     else
+        # Index by home-relative path so later roots override earlier ones
+        local -A by_rel=()
+        local root f
+        for root in "${ROOTS[@]}"; do
+            while IFS= read -r -d '' f; do
+                by_rel["${f#"$root"/}"]="$f"
+            done < <(find "$root" -type f -print0)
+        done
         while IFS= read -r -d '' f; do
-            files+=("$f")
-        done < <(find "$DOTS_HOME" -type f -print0 | sort -z)
+            files+=("${by_rel[$f]}")
+        done < <(printf '%s\0' "${!by_rel[@]}" | sort -z)
     fi
 
     if [[ ${#files[@]} -eq 0 ]]; then
@@ -225,6 +276,7 @@ main() {
     fi
 
     local header="Syncing dotfiles -> \$HOME"
+    [[ -n "$HOST" ]] && header="$header  (host: $HOST)"
     $DRY_RUN && header="$header  [dry run]"
     echo "$header"
     echo ""
