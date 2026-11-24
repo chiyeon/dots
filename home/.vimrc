@@ -46,6 +46,11 @@ set linebreak
 set textwidth=0
 set wrapmargin=0
 
+" column guide at 80, toggle with <leader>c
+set colorcolumn=80
+highlight ColorColumn ctermbg=236 guibg=#303030
+nnoremap <leader>c :let &l:colorcolumn = empty(&l:colorcolumn) ? '80' : ''<CR>
+
 " --- SEARCH ---
 set hlsearch
 set incsearch
@@ -62,6 +67,14 @@ let mapleader = " "
 " movement
 nnoremap j gj
 nnoremap k gk
+
+" delete/change without yanking (leader prefix keeps normal d/c intact)
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+nnoremap <leader>D "_D
+nnoremap x "_x
+" paste over a selection without overwriting the register
+xnoremap p P
 
 " stay in visual mode after indent
 vnoremap > >gv
