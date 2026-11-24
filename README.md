@@ -13,6 +13,13 @@ Create symlinks of all `home/` dot files (backs up existing files)
 
 Alternatively `./sync.sh --help`
 
+### Default apps
+After syncing, set default apps (vim in a terminal for text, feh for images, vlc for audio/video):
+```
+~/.scripts/mime-defaults.sh
+```
+The terminal comes from `$TERMINAL` (defaults to kitty).
+
 ### Local overrides
 Machine-specific settings go in `~/.zshenv.local`, `~/.zshrc.local` and `~/.config/tmux/tmux.local.conf` (all untracked, sourced if present).
 
