@@ -18,7 +18,7 @@ After syncing, set default apps (vim in a terminal for text, feh for images, vlc
 ```
 ~/.scripts/mime-defaults.sh
 ```
-The terminal comes from `$TERMINAL` (defaults to kitty).
+The terminal comes from `$TERMINAL` (defaults to foot, then kitty).
 
 ### Local overrides
 Machine-specific settings go in `~/.zshenv.local`, `~/.zshrc.local` and `~/.config/tmux/tmux.local.conf` (all untracked, sourced if present).
