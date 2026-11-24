@@ -22,21 +22,28 @@ border-color=#bf616a
 
 [summary~="^(volume|brightness)$"]
 anchor=bottom-center
-default-timeout=1000
-width=200
 outer-margin=0,0,72,0
-height=14
-border-radius=6
-background-color=#adaaa5
-border-color=#adaaa5
-border-size=2
-text-color=#00000000
+width=240
+height=30
+padding=6,14
+border-size=0
+border-radius=15
+default-timeout=1200
+font=General Sans Bold 10
+format=%b
+text-alignment=center
+background-color=#2a2e2b
+text-color=#f0eee9
 
 [summary="volume"]
-progress-color=#2b4e4f
+progress-color=over #4f8a8b
 
 [summary="brightness"]
-progress-color=#2e2920
+progress-color=over #a8834a
+
+[summary="volume" category="muted"]
+progress-color=over #5a5d5b
+text-color=#9a9894
 
 [summary="system"]
 default-timeout=3000
