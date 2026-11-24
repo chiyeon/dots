@@ -1,0 +1,10 @@
+#!/bin/sh
+# Toggle mako do-not-disturb; "on" is sent before entering, "off" after leaving.
+if makoctl mode | grep -qx do-not-disturb; then
+    makoctl mode -r do-not-disturb
+    notify-send -t 1500 "DND off"
+else
+    notify-send -t 1500 "DND on"
+    sleep 0.3
+    makoctl mode -a do-not-disturb
+fi
