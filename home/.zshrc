@@ -80,6 +80,7 @@ alias d='dirs -v'
 # Scripts
 alias notes="$HOME/.scripts/notes.sh"
 alias present="python3 $HOME/.scripts/mdslides.py"
+alias preview="$HOME/.scripts/preview.sh"
 
 # Git Logic
 alias gs='git status'
