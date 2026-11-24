@@ -3,7 +3,7 @@ export EDITOR="vim"
 export PATH="$HOME/.local/bin:$PATH"
 
 export VIM_ENABLE_PLUGINS=1
-export NOTES_DIR='$HOME/.notes'
+export NOTES_DIR="$HOME/.notes"
 
 # History Settings
 export HISTFILE=~/.history
@@ -36,7 +36,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Case-insensitive completion & matching middle of words
-zstyle ':completion:*' matcher-list 'm:{a-z criteria-Z}={A-Z criteria-a}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Group results by type with nice headers
 zstyle ':completion:*' group-name ''
