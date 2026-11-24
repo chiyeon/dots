@@ -9,6 +9,7 @@ set noswapfile
 set mouse=a
 set ttyfast
 set clipboard=unnamed
+if has('unnamedplus') | set clipboard=unnamedplus | endif
 set shortmess+=I
 set modelines=0
 
