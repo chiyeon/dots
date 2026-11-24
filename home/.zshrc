@@ -119,10 +119,12 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '(%b) '
 
 # Runs before every prompt display
-precmd() {
+autoload -Uz add-zsh-hook
+_prompt_precmd() {
     vcs_info
     print -Pn "\e]2;%-3~\a" # Window title logic
 }
+add-zsh-hook precmd _prompt_precmd
 
 # The Visual Prompt
 if [[ -n "$SSH_CONNECTION" ]]; then
