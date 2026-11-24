@@ -16,7 +16,7 @@ Alternatively `./sync.sh --help`
 ### Default apps
 After syncing, set default apps (vim in a terminal for text, imv for images, vlc for audio/video):
 ```
-~/.scripts/mime-defaults.sh
+mime-defaults
 ```
 The terminal comes from `$TERMINAL` (defaults to foot, then kitty).
 
@@ -25,7 +25,7 @@ macOS quick look style previews (mpv, imv, bat, zathura) in a floating sway wind
 ```
 sudo pacman -S --needed mpv imv bat zathura zathura-pdf-mupdf
 echo 'include ~/.config/sway/config.d/*' >> ~/.config/sway/config
-~/.scripts/thunar-preview.sh
+thunar-preview
 ```
 
 ### Local overrides

@@ -2,7 +2,7 @@
 Type=Application
 Name=Vim (terminal)
 Comment=Edit text files with vim in a terminal
-Exec=sh -c "exec \\"\\$HOME/.scripts/vim-term.sh\\" \\"\\$@\\"" vim-term %F
+Exec=sh -c "exec \\"\\$HOME/.scripts/vim-term\\" \\"\\$@\\"" vim-term %F
 Terminal=false
 Icon=gvim
 Categories=Utility;TextEditor;

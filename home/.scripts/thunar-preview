@@ -1,5 +1,5 @@
 #!/bin/bash
-# add a "Preview" custom action to thunar, bound to space (runs preview.sh)
+# add a "Preview" custom action to thunar, bound to space (runs preview)
 set -e
 
 UCA="$HOME/.config/Thunar/uca.xml"
@@ -18,7 +18,7 @@ if ! grep -q "<unique-id>$ID</unique-id>" "$UCA"; then
 	<name>Preview</name>
 	<submenu></submenu>
 	<unique-id>$ID</unique-id>
-	<command>$HOME/.scripts/preview.sh %f</command>
+	<command>$HOME/.scripts/preview %f</command>
 	<description>Toggle a floating quick look preview</description>
 	<range></range>
 	<patterns>*</patterns>

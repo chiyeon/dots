@@ -1,7 +1,7 @@
 # Sourced by every zsh (interactive or not) — env vars only
 export EDITOR="vim"
 typeset -U path
-path=("$HOME/.local/bin" $path)
+path=("$HOME/.local/bin" "$HOME/.scripts" $path)
 
 export NOTES_DIR="$HOME/.notes"
 
