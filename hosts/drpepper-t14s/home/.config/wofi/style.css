@@ -1,0 +1,54 @@
+* {
+    font-family: "General Sans", sans-serif;
+    font-size: 15px;
+}
+
+window {
+    margin: 0px;
+    background-color: transparent;
+}
+
+#input {
+    margin: 5px;
+    border: none;
+    color: #f8f8f2;
+    background-color: #1C1C1C;
+}
+
+#inner-box {
+    margin: 5px;
+    border: none;
+    background-color: #121413;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    background-color: #121413;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 5px;
+    border: none;
+    color: #f8f8f2;
+} 
+
+#entry.activatable #text {
+    color: #282a36;
+}
+
+#entry > * {
+    color: #f8f8f2;
+}
+
+#entry:selected {
+    background-color: #1c1c1c;
+}
+
+#entry:selected #text {
+}
