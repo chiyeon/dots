@@ -3,5 +3,7 @@ export EDITOR="vim"
 typeset -U path
 path=("$HOME/.local/bin" $path)
 
-export VIM_ENABLE_PLUGINS=1
 export NOTES_DIR="$HOME/.notes"
+
+# machine-specific env, not tracked in dots (e.g. export VIM_ENABLE_PLUGINS=1)
+[[ -r ~/.zshenv.local ]] && source ~/.zshenv.local
