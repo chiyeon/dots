@@ -1,0 +1,9 @@
+allow_images=true
+hide_scroll=true
+no_actions=true
+term=foot
+mode=drun
+width=600
+lines=6
+prompt=search
+--show
