@@ -117,6 +117,52 @@ augroup markdown
   autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
   autocmd FileType markdown let &l:comments = 'b:- [x],b:- [ ],b:-,b:*'
   autocmd FileType markdown setlocal formatoptions+=ro
+  " prose: spellcheck, no line numbers or column guide
+  autocmd FileType markdown setlocal spell spelllang=en_us nonumber colorcolumn=
+  " autosave when leaving insert mode, after normal-mode edits, or on focus loss
+  autocmd FileType markdown autocmd! markdown TextChanged,InsertLeave,FocusLost,BufLeave <buffer> call s:Autosave()
+augroup END
+
+function! s:Autosave()
+  if &modified && &buftype ==# '' && !empty(bufname()) && !&readonly
+    silent! update
+  endif
+endfunction
+
+" --- FOCUS MODE ---
+" <leader>W centers the current buffer between blank side panes, hides UI
+function! s:FocusOff()
+  for b in get(t:, 'focus_pads', [])
+    for w in win_findbuf(b) | call win_execute(w, 'close') | endfor
+  endfor
+  unlet! t:focus_pads
+  let &laststatus = 2
+  setlocal number< colorcolumn<
+  if &filetype ==# 'markdown' | setlocal nonumber colorcolumn= | endif
+endfunction
+
+function! s:FocusToggle()
+  if exists('t:focus_pads') | return s:FocusOff() | endif
+  silent! only
+  let l:pad = max([0, (&columns - 84) / 2])
+  let t:focus_pads = []
+  for l:cmd in ['topleft vnew', 'botright vnew']
+    execute l:cmd
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nonumber nospell colorcolumn=
+    setlocal fillchars=vert:\ ,eob:\  statusline=\  winfixwidth
+    execute 'vertical resize' l:pad
+    call add(t:focus_pads, bufnr())
+    wincmd p
+  endfor
+  set laststatus=0
+  setlocal nonumber colorcolumn=
+endfunction
+
+nnoremap <silent> <leader>W :call <SID>FocusToggle()<CR>
+augroup focus_mode
+  autocmd!
+  " :q in focus mode closes the side panes too
+  autocmd QuitPre * if exists('t:focus_pads') && index(t:focus_pads, bufnr()) < 0 | call s:FocusOff() | endif
 augroup END
 
 " --- NETRW ---
