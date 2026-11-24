@@ -1,0 +1,46 @@
+# layout
+layer=top
+anchor=top-right
+margin=10
+padding=8,12
+max-visible=6
+max-icon-size=48
+font=General Sans 10
+border-size=0
+
+# colors
+background-color=#1a1d1b
+text-color=#d8d6cf
+
+# behavior
+default-timeout=6000
+
+[urgency=critical]
+default-timeout=0
+border-size=2
+border-color=#bf616a
+
+[summary~="^(volume|brightness)$"]
+anchor=bottom-center
+default-timeout=1000
+width=200
+outer-margin=0,0,72,0
+height=14
+border-radius=6
+background-color=#adaaa5
+border-color=#adaaa5
+border-size=2
+text-color=#00000000
+
+[summary="volume"]
+progress-color=#2b4e4f
+
+[summary="brightness"]
+progress-color=#2e2920
+
+[summary="system"]
+default-timeout=3000
+width=300
+
+[mode=do-not-disturb]
+invisible=1
