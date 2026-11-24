@@ -1,13 +1,11 @@
-" super simple vimrc - no plugins
+" simple vimrc, optional plugins via VIM_ENABLE_PLUGINS=1
 
 " --- GENERAL ---
-set nocompatible
 set encoding=utf-8
 set timeoutlen=300
 set hidden
 set noswapfile
 set mouse=a
-set ttyfast
 set clipboard=unnamed
 if has('unnamedplus') | set clipboard=unnamedplus | endif
 set shortmess+=I
@@ -19,15 +17,11 @@ set ruler
 set title
 set background=dark
 set laststatus=2
-set showmode
 set showcmd
 set wildmenu
 set scrolloff=4
 set sidescrolloff=8
 set noerrorbells
-
-" fix for macos
-set re=2
 
 " beam cursor in insert, block in normal
 let &t_SI = "\<Esc>[6 q"
@@ -38,12 +32,10 @@ syntax on
 filetype plugin indent on
 
 " --- INDENTATION ---
-" set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set noshiftround
 set autoindent
 set copyindent
 set backspace=indent,eol,start
@@ -53,9 +45,6 @@ set wrap
 set linebreak
 set textwidth=0
 set wrapmargin=0
-
-" set colorcolumn=80
-" highlight ColorColumn ctermbg=darkgray
 
 " --- SEARCH ---
 set hlsearch
@@ -75,11 +64,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap B ^
 nnoremap E $
-
-" delete without yanking
-" nnoremap d "_d
-" nnoremap D "_D
-" vnoremap d "_d
 
 " stay in visual mode after indent
 vnoremap > >gv
@@ -121,8 +105,6 @@ nnoremap <leader>w :set list!<CR>
 augroup markdown
   autocmd!
   autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
-  " autocmd FileType markdown setlocal spell spelllang=en_us
-  " autocmd FileType markdown setlocal conceallevel=2
   autocmd FileType markdown let &l:comments = 'b:- [x],b:- [ ],b:-,b:*'
   autocmd FileType markdown setlocal formatoptions+=ro
 augroup END
@@ -187,8 +169,6 @@ if $VIM_ENABLE_PLUGINS == '1'
     call plug#begin('~/.vim/plugged')
 
     Plug 'vimwiki/vimwiki'
-    " Plug 'godlygeek/tabular'
-    " Plug 'preservim/vim-markdown'
 
     call plug#end()
 
